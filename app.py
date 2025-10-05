@@ -12,6 +12,11 @@ import os
 import hashlib
 from datetime import datetime
 
+# Add audio dependencies
+from gtts import gTTS
+import io
+import base64
+
 st.set_page_config(
     page_title="NASA Bioscience Intelligence",
     page_icon="🚀",
@@ -19,7 +24,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-API_BASE = "https://nasa-bioscience-intelligence.onrender.com"
+API_BASE = "http://localhost:8000"
 
 @st.cache_data
 def load_precomputed_data():
@@ -124,6 +129,26 @@ def calculate_theme_maturity():
         }
 
     return themes_maturity
+
+
+def generate_audio(text):
+    """Generate audio directly in Streamlit without FastAPI"""
+    try:
+
+        # Limit text length for performance
+        text = text[:500]
+
+        tts = gTTS(text=text, lang='en', slow=False)
+        audio_buffer = io.BytesIO()
+        tts.write_to_fp(audio_buffer)
+        audio_buffer.seek(0)
+
+        audio_base64 = base64.b64encode(audio_buffer.read()).decode('utf-8')
+        return audio_base64
+    except Exception as e:
+        st.error(f"Audio generation failed: {e}")
+        return None
+
 
 def show_demo_scenarios():
     """Pre-built demo scenarios for competition judging"""
@@ -328,12 +353,6 @@ def main():
         st.error("No precomputed data found. Please ensure 'nasa_precomputed_data' folder is in the same directory.")
         return
 
-    # Check API status - REQUIRED
-    api_online = check_api_health()
-    if not api_online:
-        st.error("Backend API is not running. Please start the FastAPI server on localhost:8000")
-        st.info("The audio features and advanced AI capabilities require the backend API to be running.")
-        st.stop()
 
     # Initialize session state
     if 'selected_publication' not in st.session_state:
@@ -369,11 +388,6 @@ def main():
 
         st.markdown("---")
 
-        # API status
-        if api_online:
-            st.success("Backend API: Connected")
-        else:
-            st.error("Backend API: Disconnected")
 
         # Current selection
         if st.session_state.selected_publication:
@@ -399,7 +413,7 @@ def main():
     elif st.session_state.current_section == "Search & Explore":
         show_search_explore()
     elif st.session_state.current_section == "Publication Analysis":
-        show_publication_analysis(api_online)
+        show_publication_analysis()
     elif st.session_state.current_section == "OSDR Data Integration":  # ← ADD THIS
         show_osdr_integration()
     elif st.session_state.current_section == "Demo Scenarios":
@@ -751,7 +765,7 @@ def show_search_explore():
     elif st.session_state.search_query:
         st.info("No results found. Try different search terms or browse by theme.")
 
-def show_publication_analysis(api_online):
+def show_publication_analysis():
     """Individual publication analysis"""
     st.header("Publication Analysis")
 
@@ -811,7 +825,7 @@ def show_publication_analysis(api_online):
                     # Audio feature - REQUIRES BACKEND
                     if st.button(f"Listen to {section_name}", key=generate_unique_key("audio", pmc_id, section_key)):
                         with st.spinner("Generating audio..."):
-                            audio_data = text_to_speech_api(summary)
+                            audio_data = generate_audio(summary)  # Uses the new function we added
                             if audio_data:
                                 audio_html = f'''
                                 <audio controls style="width: 100%">
