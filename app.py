@@ -588,7 +588,7 @@ def show_research_themes():
                            showlegend=False,
                            hovermode='closest',
                            margin=dict(b=20,l=5,r=5,t=40),
-                           height=500,
+                           height=700,
                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-1.5, 1.5]),
                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-1.5, 1.5])
                        ))
@@ -883,10 +883,10 @@ def display_individual_knowledge_graph(kg_data):
                            showlegend=False,
                            hovermode='closest',
                            margin=dict(b=20,l=5,r=5,t=40),
-                           height=650,
+                           height=600,
                            autosize=True,  
-                           xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2, 2]),
-                           yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2, 2])
+                           xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                           yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)
                        ))
 
         st.plotly_chart(fig, use_container_width=True)
