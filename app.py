@@ -1,4 +1,3 @@
-# app.py - NASA Space Apps Challenge Professional Version
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -42,7 +41,6 @@ def load_precomputed_data():
 
     return data
 
-# Load everything at startup
 precomputed = load_precomputed_data()
 
 def check_api_health():
@@ -121,8 +119,13 @@ def calculate_theme_maturity():
     for theme in precomputed['global_themes_network']['nodes']:
         theme_id = theme['id']
         pubs_count = len(theme_publications.get(theme_id, []))
-        # Maturity score based on publication count (normalized to 0-100)
-        maturity_score = min(pubs_count * 3, 100)  # Cap at 100
+        if pubs_count <= 10:
+            maturity_score = min(pubs_count * 4, 40) 
+        elif pubs_count <= 25:
+            maturity_score = 40 + min((pubs_count - 10) * 2, 30) 
+        else:
+            maturity_score = 70 + min((pubs_count - 25) * 1.5, 30)  
+        
         themes_maturity[theme_id] = {
             'score': maturity_score,
             'publications': pubs_count
@@ -132,10 +135,8 @@ def calculate_theme_maturity():
 
 
 def generate_audio(text):
-    """Generate audio directly in Streamlit without FastAPI"""
     try:
 
-        # Limit text length for performance
         text = text[:500]
 
         tts = gTTS(text=text, lang='en', slow=False)
@@ -172,7 +173,6 @@ def show_demo_scenarios():
         st.success("Scenario: Designing radiation protection for Mars mission crew safety")
         st.info("User: Mission Architect | Goal: Identify radiation protection strategies from existing research")
 
-        # Auto-search radiation publications
         results = precomputed['search_index']['by_theme'].get('radiation', [])[:8]
         if results:
             st.subheader("Relevant Radiation Studies")
@@ -228,10 +228,8 @@ def show_impact_dashboard():
     """Show research impact metrics"""
     st.header("Research Impact Dashboard")
 
-    # Calculate maturity scores
     themes_maturity = calculate_theme_maturity()
 
-    # Mission Impact Metrics
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         total_mission_studies = sum(1 for data in precomputed['publications'].values()
@@ -347,7 +345,7 @@ def show_about():
 
 def main():
     st.title("🚀 NASA Space Biology Intelligence Platform")
-    st.markdown("**AI-powered exploration of NASA bioscience research for Moon and Mars missions**")
+    st.markdown("**AI-powered exploration of NASA bioscience research**")
 
     if not precomputed.get('publications'):
         st.error("No precomputed data found. Please ensure 'nasa_precomputed_data' folder is in the same directory.")
@@ -425,14 +423,6 @@ def show_dashboard_overview():
     """Dashboard overview"""
     st.header("Dashboard Overview")
 
-    # Competition-focused intro
-    st.markdown("""
-    **AI-powered analysis of 571 NASA bioscience publications to enable safer Moon and Mars exploration**
-
-    Supporting scientists, mission planners, and research managers with actionable insights
-    """)
-
-    # Key metrics - ENHANCED for competition
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric("Total Publications", precomputed['metadata']['total_publications'])
