@@ -111,12 +111,12 @@ def calculate_theme_maturity():
     for theme in precomputed['global_themes_network']['nodes']:
         theme_id = theme['id']
         pubs_count = len(theme_publications.get(theme_id, []))
-        if pubs_count <= 10:
-            maturity_score = min(pubs_count * 4, 40) 
-        elif pubs_count <= 25:
-            maturity_score = 40 + min((pubs_count - 10) * 2, 30) 
+        if pubs_count <= 200:
+            maturity_score = min(pubs_count/4, 40) 
+        elif pubs_count <= 250:
+            maturity_score = 40 + min((pubs_count - 10)/2, 30) 
         else:
-            maturity_score = 70 + min((pubs_count - 25) * 1.5, 30)  
+            maturity_score = 70 + min((pubs_count - 25)/ 1.5, 30)  
         
         themes_maturity[theme_id] = {
             'score': maturity_score,
