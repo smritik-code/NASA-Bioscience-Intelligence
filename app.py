@@ -43,14 +43,6 @@ def load_precomputed_data():
 
 precomputed = load_precomputed_data()
 
-def check_api_health():
-    """Check if backend API is running"""
-    try:
-        response = requests.get(f"{API_BASE}/api/health", timeout=2)
-        return response.status_code == 200
-    except:
-        return False
-
 def text_to_speech_api(text):
     """Convert text to speech using backend API"""
     try:
@@ -395,12 +387,7 @@ def main():
                 st.session_state.selected_publication = None
                 st.rerun()
 
-    # Welcome message for all users
-    st.info("""
-    Welcome to NASA Bioscience Intelligence! This platform transforms complex space biology research
-    into actionable insights for Moon and Mars exploration. Explore 571 publications across 8 research themes.
-    """)
-
+ 
     # Section routing
     if st.session_state.current_section == "Dashboard Overview":
         show_dashboard_overview()
