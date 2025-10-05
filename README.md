@@ -25,14 +25,12 @@ Frontend & Web Interface
 Backend & Services
 
 - Python (primary programming language)
-- FastAPI (backend API services)
 
 AI & Machine Learning
 
 - Hugging Face Transformers library
 - Facebook BART-large-CNN model (text summarization)
 - Sentence-BERT/all-MiniLM-L6-v2 (semantic analysis)
-- Coqui TTS (text-to-speech synthesis)
 - Coqui TTS (text-to-speech synthesis)
 
 Data Processing & Analysis
