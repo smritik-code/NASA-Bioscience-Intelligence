@@ -10,6 +10,7 @@ import re
 import os
 import hashlib
 from datetime import datetime
+import random
 
 # Add audio dependencies
 from gtts import gTTS
@@ -873,8 +874,7 @@ def display_individual_knowledge_graph(kg_data):
     if len(G.nodes()) > 1:
         pos = nx.spring_layout(G, k=3, iterations=200, seed=42)
 
-        pos.update({node: np.random.uniform(-0.5, 0.5, 2) for node in G.nodes() if G.degree(node) == 0})
-
+        pos.update({node: [random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)] for node in G.nodes() if G.degree(node) == 0})
         edge_trace, node_trace = create_knowledge_graph_traces(G, pos)
 
         fig = go.Figure(data=[edge_trace, node_trace],
