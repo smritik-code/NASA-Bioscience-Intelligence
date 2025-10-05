@@ -322,7 +322,6 @@ def show_about():
         st.subheader("Technical Stack")
         st.markdown("""
         - Frontend: Streamlit
-        - Backend: FastAPI (Required)
         - AI/ML: Hugging Face Transformers (BART, Sentence-BERT)
         - Data Processing: Pandas, NumPy
         - Visualization: Plotly, NetworkX
