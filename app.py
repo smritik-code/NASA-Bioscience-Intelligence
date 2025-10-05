@@ -822,22 +822,6 @@ def show_publication_analysis():
         else:
             st.info("No significant technical concepts found for visualization")
 
-        # Technical Terms
-        st.subheader("Key Technical Terms")
-        tech_terms = pub_data.get('technical_terms', [])
-        if tech_terms:
-            cols = st.columns(3)
-            terms_per_col = (len(tech_terms) + 2) // 3
-
-            for i, col in enumerate(cols):
-                start_idx = i * terms_per_col
-                end_idx = min(start_idx + terms_per_col, len(tech_terms))
-                with col:
-                    for term in tech_terms[start_idx:end_idx]:
-                        st.write(f"• {term}")
-        else:
-            st.info("No technical terms extracted")
-
         # Research Themes
         st.subheader("Research Themes")
         theme_counts = pub_data.get('theme_analysis', {}).get('theme_counts', {})
@@ -857,6 +841,24 @@ def show_publication_analysis():
                     }.get(theme, theme.title())
 
                     st.write(f"**{theme_name}**: {count} related terms")
+        
+        # Technical Terms
+        st.subheader("Key Technical Terms")
+        tech_terms = pub_data.get('technical_terms', [])
+        if tech_terms:
+            cols = st.columns(3)
+            terms_per_col = (len(tech_terms) + 2) // 3
+
+            for i, col in enumerate(cols):
+                start_idx = i * terms_per_col
+                end_idx = min(start_idx + terms_per_col, len(tech_terms))
+                with col:
+                    for term in tech_terms[start_idx:end_idx]:
+                        st.write(f"• {term}")
+        else:
+            st.info("No technical terms extracted")
+
+
 
 def display_individual_knowledge_graph(kg_data):
     """Display knowledge graph for individual publication"""
@@ -871,6 +873,8 @@ def display_individual_knowledge_graph(kg_data):
     if len(G.nodes()) > 1:
         pos = nx.spring_layout(G, k=3, iterations=200, seed=42)
 
+        pos.update({node: np.random.uniform(-0.5, 0.5, 2) for node in G.nodes() if G.degree(node) == 0})
+
         edge_trace, node_trace = create_knowledge_graph_traces(G, pos)
 
         fig = go.Figure(data=[edge_trace, node_trace],
@@ -879,7 +883,7 @@ def display_individual_knowledge_graph(kg_data):
                            showlegend=False,
                            hovermode='closest',
                            margin=dict(b=20,l=5,r=5,t=40),
-                           height=500,
+                           height=650,
                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2, 2]),
                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2, 2])
                        ))
