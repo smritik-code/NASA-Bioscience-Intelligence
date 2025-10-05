@@ -1,5 +1,10 @@
+# Core FastAPI dependencies
 fastapi==0.104.1
 uvicorn==0.24.0
 gtts==2.3.2
 pydantic==2.5.0
 python-multipart==0.0.6
+python-dotenv==1.0.0
+
+# Remove heavy ML dependencies - we don't need them in backend
+# transformers, torch, etc. are only needed in Streamlit frontend
