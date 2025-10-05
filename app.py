@@ -202,20 +202,20 @@ def show_demo_scenarios():
                         st.info(insight)
 
     elif scenario == "Crew Health: Long-duration Missions":
-    st.success("Scenario: Ensuring astronaut health during year-long Mars missions")
-    st.info("User: Mission Medical Officer | Goal: Identify health risks and countermeasures for long-duration spaceflight")
+        st.success("Scenario: Ensuring astronaut health during year-long Mars missions")
+        st.info("User: Mission Medical Officer | Goal: Identify health risks and countermeasures for long-duration spaceflight")
 
-    results = precomputed['search_index']['by_theme'].get('human_physiology', [])[:8]
-    if results:
-        st.subheader("Crew Health Research")
-        for i, pmc_id in enumerate(results):
-            pub_data = precomputed['publications'][pmc_id]
-            with st.expander(f"Study: {pmc_id}"):
-                st.write("Summary:", pub_data.get('abstract_summary', 'No summary available'))
-                if st.button("Analyze Technical Concepts", key=f"health_{pmc_id}"):
-                    st.session_state.selected_publication = pmc_id
-                    st.session_state.current_section = "Publication Analysis"
-                    st.rerun()
+        results = precomputed['search_index']['by_theme'].get('human_physiology', [])[:8]
+        if results:
+            st.subheader("Crew Health Research")
+            for i, pmc_id in enumerate(results):
+                pub_data = precomputed['publications'][pmc_id]
+                with st.expander(f"Study: {pmc_id}"):
+                    st.write("Summary:", pub_data.get('abstract_summary', 'No summary available'))
+                    if st.button("Analyze Technical Concepts", key=f"health_{pmc_id}"):
+                        st.session_state.selected_publication = pmc_id
+                        st.session_state.current_section = "Publication Analysis"
+                        st.rerun()
 
     elif scenario != "Select a scenario...":
         st.info(f"Scenario '{scenario}' implementation in progress...")
