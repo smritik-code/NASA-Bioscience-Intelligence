@@ -589,8 +589,8 @@ def show_research_themes():
                            hovermode='closest',
                            margin=dict(b=20,l=5,r=5,t=40),
                            height=700,
-                           xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-1.5, 1.5]),
-                           yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-1.5, 1.5])
+                           xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                           yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)
                        ))
 
         st.plotly_chart(fig, use_container_width=True)
