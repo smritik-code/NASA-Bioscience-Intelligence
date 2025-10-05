@@ -872,7 +872,7 @@ def display_individual_knowledge_graph(kg_data):
         G.add_edge(edge['source'], edge['target'])
 
     if len(G.nodes()) > 1:
-        pos = nx.spring_layout(G, k=3, iterations=200, seed=42)
+        pos = nx.spring_layout(G, k=4, iterations=200, seed=42)
 
         pos.update({node: [random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)] for node in G.nodes() if G.degree(node) == 0})
         edge_trace, node_trace = create_knowledge_graph_traces(G, pos)
