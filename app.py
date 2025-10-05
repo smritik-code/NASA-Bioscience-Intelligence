@@ -293,7 +293,7 @@ def show_about():
     st.markdown("""
     ## Bioscience Intelligence Platform
 
-    **Transforming 571 NASA Space Biology publications into actionable mission insights**
+    **Transforming NASA Space Biology publications into actionable mission insights**
 
     ### The Challenge
     Exploring the Moon and Mars requires understanding how living systems respond to space.
