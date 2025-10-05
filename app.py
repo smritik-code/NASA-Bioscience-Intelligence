@@ -44,19 +44,7 @@ def load_precomputed_data():
 
 precomputed = load_precomputed_data()
 
-def text_to_speech_api(text):
-    """Convert text to speech using backend API"""
-    try:
-        response = requests.post(
-            f"{API_BASE}/api/audio/generate",
-            json={"text": text},
-            timeout=10
-        )
-        if response.status_code == 200:
-            return response.json().get('audio_content')
-    except Exception as e:
-        st.error(f"Audio generation failed: {e}")
-    return None
+
 
 def generate_unique_key(base_key, *args):
     """Generate a unique key by hashing additional arguments"""
@@ -336,7 +324,7 @@ def show_about():
     """)
 
 def main():
-    st.title("🚀 NASA Space Biology Intelligence Platform")
+    st.title("🚀 NASA Bioscience Intelligence Platform")
     st.markdown("**AI-powered exploration of NASA bioscience research**")
 
     if not precomputed.get('publications'):
