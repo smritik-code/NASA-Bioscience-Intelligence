@@ -884,6 +884,7 @@ def display_individual_knowledge_graph(kg_data):
                            hovermode='closest',
                            margin=dict(b=20,l=5,r=5,t=40),
                            height=650,
+                           autosize=True,  
                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2, 2]),
                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-2, 2])
                        ))
