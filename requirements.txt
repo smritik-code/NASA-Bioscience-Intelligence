@@ -7,4 +7,6 @@ torch==2.0.1
 requests==2.31.0
 numpy==1.24.3
 tqdm==4.66.1
-gtts==2.3.2  # ← ADD THIS
+gtts==2.3.2
+scipy==1.10.1
+scikit-learn==1.3.0
